@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<style>
+  .pagination {
+    display: inline-block;
+  }
+
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 5px 5px;
+    text-decoration: none;
+  }
+
+  .pagination a.active {
+    background-color: gray;
+    color: white;
+    border-radius: 2px;
+  }
+</style>
+<head>
+  <title>Customers List</title>
+</head>
+<body>
+<h1>Customers List</h1>
+<table border="2">
+  <thead>
+  <tr>
+    <th>Phone</th>
+    <th>Country</th>
+    <th>State</th>
+    <th>Country Code</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="customer, iStat : ${customers.content}"
+      th:style="${iStat.odd}? 'font-weight: bold;'"
+      th:alt-title="${iStat.even}? 'even' : 'odd'">
+    <td th:text="${customer.phone}" />
+    <td th:text="${customer.country}" />
+    <td th:text="${customer.state}" />
+    <td th:text="${customer.countryCode}" />
+  </tr>
+  </tbody>
+</table>
+<div th:if="${totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+  <a th:href="@{/getAll(size=${customers.size}, page=${pageNumber})}"
+     th:text=${pageNumber}
+     th:class="${pageNumber==customers.number + 1} ? active"></a>
+</div>
+
+</body>
+</html>
